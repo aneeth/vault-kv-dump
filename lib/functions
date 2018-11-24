@@ -11,6 +11,18 @@ function retrieve () {
   curl -s \
     --header "X-Vault-Token: ${TOKEN}" \
     ${VAULT_ADDR}/v1/$1 \
-    | jq '.data'
+    | jq '{"data" : .data}'
+}
+
+function write () {
+  file_path=$1
+  secret_path=$(echo $1 | sed "s#${KV_FOLDER}##g; s#/#/data/#")
+  echo $data
+
+  curl -s \
+    --header "X-Vault-Token: ${TOKEN}" \
+    --request POST \
+    --data @${file_path} \
+    ${VAULT_ADDR}/v1/${secret_path}
 }
 
