@@ -14,9 +14,9 @@ if [ -z $VAULT_ADDR ]; then
   exit 1
 fi
 
-if [ -z $MOUNTS ]; then
-  echo "Please define 'MOUNTS'"
-  echo " example: MOUNTS=\"secret/ my-secret/\""
+if [ -z $KV_MOUNTS ]; then
+  echo "Please define 'KV_MOUNTS'"
+  echo " example: KV_MOUNTS=\"secret/ my-secret/\""
   exit 1
 fi
 
@@ -62,7 +62,7 @@ function traverse_kv () {
   done
 }
 
-for mount in $MOUNTS
+for mount in $KV_MOUNTS
 do
   if [ "${mount: -1}" != "/" ]; then
     mount="${mount}/"
