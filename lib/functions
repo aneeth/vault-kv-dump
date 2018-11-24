@@ -1,0 +1,16 @@
+function list () {
+  curl -s \
+    --header "X-Vault-Token: ${TOKEN}" \
+    --request LIST \
+    ${VAULT_ADDR}/v1/$1 \
+    | jq '.data.keys | join(" ")' \
+    | tr -d '"'
+}
+
+function retrieve () {
+  curl -s \
+    --header "X-Vault-Token: ${TOKEN}" \
+    http://127.0.0.1:8100/v1/$1 \
+    | jq '.data'
+}
+

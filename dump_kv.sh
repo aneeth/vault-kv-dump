@@ -1,8 +1,9 @@
 #!/bin/bash
 
-DUMP_FOLDER="dump-$(date +"%Y%m%d%H%S")"
+source lib/functions
+
+DUMP_FOLDER="dump_kv-$(date +"%Y%m%d%H%S")"
 KV_FOLDER="${DUMP_FOLDER}/kv"
-POLICIES_FOLDER="${DUMP_FOLDER}/policies"
 
 if [ -z $TOKEN ]; then
   echo "Please define 'TOKEN'"
@@ -20,34 +21,9 @@ if [ -z $KV_MOUNTS ]; then
   exit 1
 fi
 
-
-function list () {
-  curl -s \
-    --header "X-Vault-Token: ${TOKEN}" \
-    --request LIST \
-    ${VAULT_ADDR}/v1/$1 \
-    | jq '.data.keys | join(" ")' \
-    | tr -d '"'
-}
-
-function retrieve () {
-  curl -s \
-    --header "X-Vault-Token: ${TOKEN}" \
-    http://127.0.0.1:8100/v1/$1 \
-    | jq '.data'
-}
-
 function dump_kv () {
   mkdir -p "${KV_FOLDER}/${1%/*}"
   echo $(retrieve "$1") >> ${KV_FOLDER}/$1
-}
-
-function dump_policies () {
-  mkdir -p "${POLICIES_FOLDER}"
-  for policy in $(list "sys/policy")
-  do
-    echo $(retrieve "sys/policy/${policy}") >> "${POLICIES_FOLDER}/${policy}"
-  done
 }
 
 function traverse_kv () {
@@ -69,5 +45,3 @@ do
   fi
   traverse_kv $mount
 done
-
-dump_policies
