@@ -22,8 +22,9 @@ if [ -z $KV_MOUNTS ]; then
 fi
 
 function dump_kv () {
-  mkdir -p "${KV_FOLDER}/${1%/*}"
-  echo $(retrieve "$1") >> ${KV_FOLDER}/$1
+  path=$( echo $1 | sed "s#/#__FLDR__/#g")
+  mkdir -p "${KV_FOLDER}/${path%/*}"
+  echo $(retrieve "$1") >> ${KV_FOLDER}/$path
 }
 
 function traverse_kv () {

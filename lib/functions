@@ -16,8 +16,7 @@ function retrieve () {
 
 function write () {
   file_path=$1
-  secret_path=$(echo $1 | sed "s#${KV_FOLDER}##g; s#/#/data/#")
-  echo $data
+  secret_path=$(echo $file_path | sed "s#__FLDR__##g; s#${KV_FOLDER}##g; s#/#/data/#")
 
   curl -s \
     --header "X-Vault-Token: ${TOKEN}" \
