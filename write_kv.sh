@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source lib/constants
 source lib/functions
 
 if [ -z $TOKEN ]; then

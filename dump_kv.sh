@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source lib/constants
 source lib/functions
 
 DUMP_FOLDER="dump_kv-$(date +"%Y%m%d%H%S")"
@@ -22,7 +23,7 @@ if [ -z $KV_MOUNTS ]; then
 fi
 
 function dump_kv () {
-  path=$( echo $1 | sed "s#/#__FLDR__/#g")
+  path=$( echo $1 | sed "s#/#${FOLDER_IDENTIFIER}/#g")
   mkdir -p "${KV_FOLDER}/${path%/*}"
   echo $(retrieve "$1") >> ${KV_FOLDER}/$path
 }
