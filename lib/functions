@@ -1,5 +1,9 @@
+if [ ! -z "$SOCK_PROXY" ]; then
+  sock_proxy="-x $SOCK_PROXY"
+fi
+
 function list () {
-  curl -s \
+  curl -s ${sock_proxy} \
     --header "X-Vault-Token: ${TOKEN}" \
     --request LIST \
     ${VAULT_ADDR}/v1/$1 \
@@ -8,7 +12,7 @@ function list () {
 }
 
 function retrieve () {
-  curl -s \
+  curl -s ${sock_proxy} \
     --header "X-Vault-Token: ${TOKEN}" \
     ${VAULT_ADDR}/v1/$1 \
     | jq '{"data" : .data}'
@@ -18,10 +22,9 @@ function write () {
   file_path=$1
   secret_path=$(echo $file_path | sed "s#${FOLDER_IDENTIFIER}##g; s#${KV_FOLDER}##g; s#/#/data/#")
 
-  curl -s \
+  curl -s ${sock_proxy} \
     --header "X-Vault-Token: ${TOKEN}" \
     --request POST \
     --data @${file_path} \
     ${VAULT_ADDR}/v1/${secret_path}
 }
-
