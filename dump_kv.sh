@@ -6,17 +6,17 @@ source lib/functions
 DUMP_FOLDER="dump_kv-$(date +"%Y%m%d%H%S")"
 KV_FOLDER="${DUMP_FOLDER}/kv"
 
-if [ -z $TOKEN ]; then
+if [ -z "$TOKEN" ]; then
   echo "Please define 'TOKEN'"
   exit 1
 fi
 
-if [ -z $VAULT_ADDR ]; then
+if [ -z "$VAULT_ADDR" ]; then
   echo "Please define 'VAULT_ADDR'"
   exit 1
 fi
 
-if [ -z $KV_MOUNTS ]; then
+if [ -z "$KV_MOUNTS" ]; then
   echo "Please define 'KV_MOUNTS'"
   echo " example: KV_MOUNTS=\"secret/ my-secret/\""
   exit 1
