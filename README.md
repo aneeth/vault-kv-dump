@@ -11,3 +11,6 @@ The associated write script would write the dumped data to a v2 KV
 
 * write secrets
 `DUMP_FOLDER="..." TOKEN="..." VAULT_ADDR="..." ./write_kv.sh`
+
+## SOCK Proxy
+You can specify a SOCK5 proxy using `SOCK_PROXY="sock5h://..."
